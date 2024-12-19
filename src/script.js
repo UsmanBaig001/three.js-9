@@ -22,21 +22,45 @@ const textureLoader = new THREE.TextureLoader();
 /**
  * House
  */
-// Temporary sphere
-const sphere = new THREE.Mesh(
-  new THREE.SphereGeometry(1, 32, 32),
-  new THREE.MeshStandardMaterial({ roughness: 0.7 })
-);
-sphere.position.y = 1;
-scene.add(sphere);
+// Group
+const house = new THREE.Group();
+scene.add(house);
 
+// Walls
+const walls = new THREE.Mesh(
+  new THREE.BoxGeometry(4, 2.5, 4),
+  new THREE.MeshStandardMaterial({
+    color: "#ac8e82",
+    // map: textureLoader.load("/textures/wood/woodcolor.jpg"),
+  })
+);
+walls.position.y = 2.5 / 2;
+house.add(walls);
+
+// Roof
+const roof = new THREE.Mesh(
+  new THREE.ConeGeometry(3.5, 1.5, 4),
+  new THREE.MeshStandardMaterial({ color: "#b35f45" })
+);
+roof.position.y = 2.5 + 1.5 / 2;
+roof.rotation.y = Math.PI * 0.25;
+house.add(roof);
+
+// Door
+const door = new THREE.Mesh(
+  new THREE.BoxGeometry(0.8, 1, 0.1),
+  new THREE.MeshStandardMaterial({ color: "#c9c9c9" })
+);
+door.position.y = 1 / 2;
+door.position.z = 2 + 0.1 / 2;
+house.add(door);
 // Floor
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial({ color: "#a9c388" })
+  new THREE.MeshStandardMaterial({ color: "#a9c388", side: THREE.DoubleSide })
 );
 floor.rotation.x = -Math.PI * 0.5;
-floor.position.y = 0;
+floor.position.y = -0.001;
 scene.add(floor);
 
 /**
